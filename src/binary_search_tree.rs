@@ -72,7 +72,7 @@ mod tests{
         bst1.insert(4);
         bst1.insert(9);
         bst1.insert(1);
-        bst1.print()
+        bst1.print();
     }
 }
 
