@@ -1,3 +1,6 @@
+use std::collections::VecDeque;
+use std::collections::HashSet;
+
 pub struct BinarySearchTree{
     root: Option<Box<Node>>,
 
@@ -47,17 +50,46 @@ impl BinarySearchTree{
     }
 
 
+    // prints a tree with bread-first search
+    pub fn print_bfs(&self){
+        let mut q = VecDeque::new();
 
-    fn print_in_order(node: &Option<Box<Node>>, level: usize){
-        if let Some(n) = node{
-            println!("Level {}: {}", level, n.data);
-            Self::print_in_order(&n.left, level + 1);
-            Self::print_in_order(&n.right, level + 1);
+        q.push_back(&self.root);
+
+
+        while !q.is_empty(){
+            let current = q.pop_front();
+            match current{
+                Some(Some(node)) => {
+                    println!("{}", node.data);
+                    q.push_back(&node.left);
+                    q.push_back(&node.right);
+                },
+                Some(_) => {},
+                None => {}
+            }
         }
     }
 
-    pub fn print(&self){
-        Self::print_in_order(&self.root, 1)
+    // prints a tree with depth-first search
+    pub fn print_dfs(&self){
+        let mut q = VecDeque::new();
+
+        q.push_front(&self.root);
+
+
+        while !q.is_empty(){
+            let current = q.pop_front();
+            match current{
+                Some(Some(node)) => {
+                    println!("{}", node.data);
+                    q.push_front(&node.left);
+                    q.push_front(&node.right);
+                },
+                Some(_) => {},
+                None => {}
+            }
+        }
     }
 }
 
@@ -65,6 +97,7 @@ impl BinarySearchTree{
 mod tests{
     use super::*;
 
+    #[test]
     fn test_insert(){
         let mut bst1 = BinarySearchTree::new();
         bst1.insert(3);
@@ -72,7 +105,8 @@ mod tests{
         bst1.insert(4);
         bst1.insert(9);
         bst1.insert(1);
-        bst1.print();
+        bst1.print_dfs();
+        bst1.print_bfs();
     }
 }
 

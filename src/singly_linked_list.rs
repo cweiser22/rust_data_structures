@@ -54,6 +54,8 @@ impl SinglyLinkedList {
         }
     }
 
+
+
     pub fn len(&self) -> usize{
         self.length
     }
